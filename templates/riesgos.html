@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block titulo %}Riesgos y prevención | PEC{% endblock %}
+{% block contenido %}
+    <div class="page-header">
+      <h1>Riesgos físicos y prevención</h1>
+      <p>Conocerlos es el primer paso para evitarlos.</p>
+    </div>
+
+    <section class="proyectos">
+      <h2 class="seccion-titulo">Riesgos en el entorno escolar</h2>
+      <div class="lista">
+        <article class="tarjeta">
+          <h3>🌀 Caídas y resbalones</h3>
+          <p><strong>Riesgo:</strong> pisos mojados, escaleras con prisa y mochilas en el pasillo.</p>
+          <p><strong>Prevención:</strong> caminar sin correr, avisar de los pisos mojados y mantener los pasillos libres.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>⚡ Instalación eléctrica</h3>
+          <p><strong>Riesgo:</strong> cables pelados o sueltos, enchufes sobrecargados.</p>
+          <p><strong>Prevención:</strong> no tocarlos, no conectar muchos aparatos juntos y avisar a un docente.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>🔥 Incendio</h3>
+          <p><strong>Riesgo:</strong> corto circuito, material inflamable o fuego sin cuidado.</p>
+          <p><strong>Prevención:</strong> conocer dónde están los extintores, no taparlos y no jugar con fuego.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>🌎 Sismo</h3>
+          <p><strong>Riesgo:</strong> caída de objetos, vidrios y muebles mal sujetos.</p>
+          <p><strong>Prevención:</strong> conocer las zonas de seguridad y participar en los simulacros.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>🪟 Infraestructura dañada</h3>
+          <p><strong>Riesgo:</strong> ventanas rotas, bancas sueltas, puertas o bardas en mal estado.</p>
+          <p><strong>Prevención:</strong> no usarlas, alejarse y reportarlas para que se reparen.</p>
+        </article>
+        <article class="tarjeta">
+          <h3>🚪 Salidas bloqueadas</h3>
+          <p><strong>Riesgo:</strong> mochilas, cajas o muebles que estorban en puertas y pasillos.</p>
+          <p><strong>Prevención:</strong> dejar siempre libres las salidas y las rutas de evacuación.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <h2 class="seccion-titulo">Así se ve la seguridad en la escuela</h2>
+      <div class="galeria">
+        <figure>
+          <img src="{{ url_for('static', filename='img/evacuacion.svg') }}" width="320" height="200"
+               alt="Tres personas caminando con calma hacia una salida de emergencia">
+          <figcaption><strong>Rutas de evacuación.</strong> Se recorren caminando, en orden y sin empujar.</figcaption>
+        </figure>
+        <figure>
+          <img src="{{ url_for('static', filename='img/extintor.svg') }}" width="320" height="200"
+               alt="Extintor rojo con su manguera">
+          <figcaption><strong>Extintores.</strong> Deben estar visibles y sin nada que los tape.</figcaption>
+        </figure>
+        <figure>
+          <img src="{{ url_for('static', filename='img/zona-segura.svg') }}" width="320" height="200"
+               alt="Letrero verde de zona de seguridad">
+          <figcaption><strong>Zonas de seguridad.</strong> Puntos de reunión donde esperamos a que pase la emergencia.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <h2 class="seccion-titulo">¿Qué hacer si hay un sismo?</h2>
+      <ol class="pasos-emergencia">
+        <li><strong>Mantén la calma.</strong> Escucha las indicaciones de tu docente.</li>
+        <li><strong>Aléjate de ventanas</strong> y de objetos que puedan caer.</li>
+        <li><strong>Ve a la zona de seguridad</strong> por la ruta de evacuación señalada.</li>
+        <li><strong>No corro, no grito, no empujo.</strong> Avanza en orden hasta el punto de reunión.</li>
+      </ol>
+    </section>
+
+    <section class="bloque">
+      <div class="emergencia">
+        <h2>Si ves un riesgo, avisa</h2>
+        <p>Dile de inmediato a un docente o directivo. En una emergencia llama al <strong>911</strong>. También puedes
+          <a href="{{ url_for('contacto') }}">enviar un reporte desde la página de contacto</a>
+          o <a href="{{ url_for('juego') }}">practicar en el juego</a>.</p>
+      </div>
+    </section>
+{% endblock %}

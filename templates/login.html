@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}Iniciar Sesión | PEC{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+  <h1>Acceso Administrativo</h1>
+  <p>Ingresa tus credenciales para administrar los mensajes.</p>
+</div>
+
+<section class="bloque">
+  <div class="login-card">
+    {% if error %}
+      <div class="alerta-error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('login') }}">
+      <div class="form-grupo">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" name="usuario" placeholder="Ej. admin" required autocomplete="username">
+      </div>
+
+      <div class="form-grupo">
+        <label for="clave">Contraseña</label>
+        <input type="password" id="clave" name="clave" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn-pec">Entrar al panel</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

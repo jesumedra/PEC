@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block titulo %}Juego | PEC{% endblock %}
+{% block contenido %}
+    <div class="page-header">
+      <h1>Detective de riesgos</h1>
+      <p>Encuentra los peligros del salón y pon a prueba lo que sabes.</p>
+    </div>
+
+    <section class="juego">
+      <h2>1. Encuentra los riesgos</h2>
+      <p>Hay <strong>5 riesgos</strong> escondidos en este salón. Haz clic (o usa Tab y Enter) sobre lo que creas peligroso.</p>
+      <div class="marcador">
+        <span>Encontrados: <strong id="contador">0 / 5</strong></span>
+        <button type="button" class="btn" id="reiniciarEscena">Reiniciar</button>
+      </div>
+
+      <svg id="escena" class="escena" viewBox="0 0 640 360" role="group" aria-label="Salón de clases con varios riesgos escondidos"
+           font-family="Nunito, Arial, sans-serif">
+        <rect width="640" height="250" fill="#e6f4ee"/>
+        <rect y="250" width="640" height="110" fill="#e3d3ae"/>
+        <rect y="246" width="640" height="6" fill="#c9b78c"/>
+
+        <!-- puerta y letrero de salida -->
+        <rect x="52" y="52" width="76" height="26" rx="4" fill="#1f5c3a"/>
+        <text x="90" y="70" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">SALIDA</text>
+        <rect x="50" y="88" width="80" height="162" fill="#a9743a" stroke="#6b4423" stroke-width="3"/>
+        <circle cx="118" cy="175" r="4" fill="#f5b82e"/>
+
+        <!-- escritorio y planta (decoración) -->
+        <rect x="430" y="190" width="110" height="14" fill="#a9743a"/>
+        <rect x="438" y="204" width="8" height="46" fill="#6b4423"/>
+        <rect x="524" y="204" width="8" height="46" fill="#6b4423"/>
+        <rect x="440" y="150" width="30" height="40" rx="3" fill="#6fbf73"/>
+
+        <!-- RIESGO 1: mochila frente a la puerta -->
+        <g class="riesgo" tabindex="0" role="button" aria-pressed="false" aria-label="Mochila junto a la puerta"
+           data-titulo="Salida bloqueada" data-info="Una mochila frente a la puerta puede impedir evacuar rápido. Las salidas siempre deben estar libres.">
+          <rect x="62" y="205" width="52" height="45" rx="12" fill="#d9534f"/>
+          <rect x="70" y="226" width="36" height="18" rx="6" fill="#b73e3a"/>
+          <path d="M76 205 q12 -16 24 0" fill="none" stroke="#7a2523" stroke-width="4"/>
+          <rect class="zona" x="54" y="190" width="68" height="64" rx="10"/>
+        </g>
+
+        <!-- RIESGO 2: ventana rota -->
+        <g class="riesgo" tabindex="0" role="button" aria-pressed="false" aria-label="Ventana del salón"
+           data-titulo="Ventana rota" data-info="Los vidrios rotos pueden cortar. Aléjate, avisa a un docente y no intentes quitarlos.">
+          <rect x="250" y="60" width="150" height="100" fill="#cfe8ff" stroke="#6b8ba4" stroke-width="4"/>
+          <path d="M325 60 V160 M250 110 H400" stroke="#6b8ba4" stroke-width="3"/>
+          <polyline points="290,68 305,95 292,110 318,135 308,152" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/>
+          <polyline points="318,135 340,128 352,150" fill="none" stroke="#333" stroke-width="3" stroke-linejoin="round"/>
+          <rect class="zona" x="240" y="52" width="170" height="116" rx="8"/>
+        </g>
+
+        <!-- RIESGO 3: piso mojado -->
+        <g class="riesgo" tabindex="0" role="button" aria-pressed="false" aria-label="Mancha en el piso"
+           data-titulo="Piso mojado" data-info="Un charco causa resbalones. Avisa y pon una señal hasta que se seque.">
+          <ellipse cx="290" cy="300" rx="62" ry="17" fill="#8ec9ff" opacity=".85"/>
+          <ellipse cx="272" cy="295" rx="20" ry="5" fill="#fff" opacity=".6"/>
+          <rect class="zona" x="222" y="276" width="136" height="48" rx="10"/>
+        </g>
+
+        <!-- RIESGO 4: cable suelto -->
+        <g class="riesgo" tabindex="0" role="button" aria-pressed="false" aria-label="Cable en el piso"
+           data-titulo="Cable suelto" data-info="Un cable en el piso causa tropiezos y puede dar descargas. Solo personal capacitado debe acomodarlo o repararlo.">
+          <path d="M455 275 C490 305 540 305 585 298 S622 296 628 318" fill="none" stroke="#222" stroke-width="5" stroke-linecap="round"/>
+          <polygon points="628,312 618,324 626,322 622,336 636,318 628,320" fill="#f5b82e" stroke="#c98d00" stroke-width="1.5"/>
+          <rect class="zona" x="445" y="262" width="195" height="78" rx="10"/>
+        </g>
+
+        <!-- RIESGO 5: extintor tapado por cajas -->
+        <g class="riesgo" tabindex="0" role="button" aria-pressed="false" aria-label="Cajas junto a la pared"
+           data-titulo="Extintor tapado" data-info="Las cajas estorban: en un incendio hay que llegar al extintor en segundos. Mantenlo visible y libre.">
+          <rect x="590" y="122" width="26" height="76" rx="9" fill="#d62828"/>
+          <rect x="595" y="108" width="16" height="16" fill="#333"/>
+          <rect x="560" y="170" width="76" height="76" fill="#c8964f" stroke="#8a5a2b" stroke-width="3"/>
+          <path d="M560 195 H636" stroke="#8a5a2b" stroke-width="3"/>
+          <rect class="zona" x="552" y="100" width="92" height="150" rx="10"/>
+        </g>
+      </svg>
+
+      <p class="mensaje-juego" id="mensajeJuego" role="status">Pista: revisa la puerta, la ventana, el piso y las esquinas.</p>
+    </section>
+
+    <section class="juego">
+      <h2>2. Pon a prueba lo que sabes</h2>
+      <div class="caja-juego" id="quiz">
+        <noscript>Activa JavaScript para jugar.</noscript>
+      </div>
+    </section>
+{% endblock %}

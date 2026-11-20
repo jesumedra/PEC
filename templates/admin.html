@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block titulo %}Panel de Administración | PEC{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+  <h1>Panel de Administración</h1>
+  <p>Gestión de reportes de riesgo, opiniones y sugerencias de la comunidad escolar.</p>
+</div>
+
+<section class="bloque">
+  <!-- Barra superior de acciones -->
+  <div class="admin-barra">
+    <div>
+      <span class="admin-contador">Sesión activa: <strong>Administrador</strong></span>
+    </div>
+    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+      <a href="{{ url_for('contacto') }}" class="btn-salir">+ Simular reporte</a>
+      <a href="{{ url_for('logout') }}" class="btn-salir">Cerrar sesión</a>
+    </div>
+  </div>
+
+  <!-- Tarjetas de resumen estadístico -->
+  <div class="admin-stats">
+    <div class="stat-card">
+      <span class="stat-numero">{{ resumen.total }}</span>
+      <span class="stat-label">Total recibidos</span>
+    </div>
+    <div class="stat-card stat-riesgo">
+      <span class="stat-numero">{{ resumen.reporte }}</span>
+      <span class="stat-label">Reportes de riesgo</span>
+    </div>
+    <div class="stat-card stat-opinion">
+      <span class="stat-numero">{{ resumen.opinion }}</span>
+      <span class="stat-label">Opiniones</span>
+    </div>
+    <div class="stat-card stat-sugerencia">
+      <span class="stat-numero">{{ resumen.sugerencia }}</span>
+      <span class="stat-label">Sugerencias</span>
+    </div>
+  </div>
+
+  {% if filas %}
+    <!-- Barra de búsqueda y filtro -->
+    <div class="admin-filtros">
+      <input type="text" id="buscadorAdmin" placeholder="Buscar por nombre, correo o mensaje..." onkeyup="filtrarTabla()">
+      <select id="filtroTipo" onchange="filtrarTabla()">
+        <option value="todos">Todas las categorías</option>
+        <option value="reporte">Reportes de riesgo</option>
+        <option value="opinion">Opiniones</option>
+        <option value="sugerencia">Sugerencias</option>
+      </select>
+    </div>
+
+    <div class="tabla-scroll">
+      <table class="tabla-pec" id="tablaReportes">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Categoría</th>
+            <th>Remitente</th>
+            <th>Correo</th>
+            <th>Mensaje</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in filas %}
+            <tr data-tipo="{{ f.tipo }}">
+              <td><strong>{{ f.id }}</strong></td>
+              <td style="white-space: nowrap;">{{ f.fecha }}</td>
+              <td>
+                <span class="badge badge-{{ f.tipo }}">
+                  {{ tipos.get(f.tipo, f.tipo) }}
+                </span>
+              </td>
+              <td><strong>{{ f.nombre }}</strong></td>
+              <td>{{ f.correo or "No proporcionado" }}</td>
+              <td>{{ f.mensaje }}</td>
+              <td>
+                <form method="POST" action="{{ url_for('eliminar_reporte', reporte_id=f.id) }}" onsubmit="return confirm('¿Seguro que deseas eliminar este mensaje?');">
+                  <button type="submit" class="btn-eliminar">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="estado-vacio">
+      <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">Todavía no hay mensajes registrados.</p>
+      <p style="font-weight: 400; color: #3b5944;">Cuando los alumnos o docentes envíen información desde la sección <strong>Contacto</strong>, aparecerá aquí automáticamente.</p>
+    </div>
+  {% endif %}
+</section>
+
+<script>
+function filtrarTabla() {
+  const texto = document.getElementById("buscadorAdmin").value.toLowerCase();
+  const tipo = document.getElementById("filtroTipo").value;
+  const filas = document.querySelectorAll("#tablaReportes tbody tr");
+
+  filas.forEach(fila => {
+    const contenido = fila.innerText.toLowerCase();
+    const filaTipo = fila.getAttribute("data-tipo");
+    const coincideTexto = contenido.includes(texto);
+    const coincideTipo = (tipo === "todos" || filaTipo === tipo);
+    fila.style.display = (coincideTexto && coincideTipo) ? "" : "none";
+  });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonios - Proyecto Escolar Comunitario (PEC)</title>
+    <style>
+        /* === ESTILOS BASE Y VARIABLES === */
+        :root {
+            --verde-primario: #1B4D3E;
+            --verde-oscuro: #183E33;
+            --verde-menta-fondo: #eaf6ee;
+            --verde-menta-suave: #d5eedc;
+            --amarillo-sol: #F5B800;
+            --amarillo-hover: #e0a800;
+            --texto-oscuro: #1b3028;
+            --blanco: #ffffff;
+            --borde-tarjeta: #183E33;
+            --sombra-3d: 0 4px 0 #183E33;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', 'Quicksand', 'Nunito', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--verde-menta-fondo);
+            /* Patrón de cuadrícula tipo cuaderno escolar */
+            background-image: 
+                linear-gradient(to right, rgba(27, 77, 62, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(27, 77, 62, 0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: var(--texto-oscuro);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* === BARRA DE NAVEGACIÓN === */
+        .navbar {
+            background-color: var(--verde-primario);
+            color: var(--blanco);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--blanco);
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.2rem 0.4rem;
+            border-radius: 50%;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--blanco);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        nav a.activo {
+            background-color: var(--amarillo-sol);
+            color: var(--verde-oscuro);
+            font-weight: 700;
+        }
+
+        /* === HEADER Y SOL DECORATIVO === */
+        .header-testimonios {
+            position: relative;
+            text-align: center;
+            padding: 3rem 1.5rem 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .sol-decorativo {
+            position: absolute;
+            top: 10px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background-color: var(--amarillo-sol);
+            border-radius: 50%;
+            border: 3px solid var(--verde-oscuro);
+            box-shadow: 0 0 0 6px rgba(245, 184, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .titulo-principal {
+            font-size: 2.8rem;
+            color: var(--verde-primario);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            text-shadow: 1px 1px 0px var(--blanco);
+        }
+
+        .subtitulo-badge {
+            display: inline-block;
+            background-color: var(--verde-primario);
+            color: var(--blanco);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 3px 0 var(--verde-oscuro);
+        }
+
+        .frase-motivacional {
+            font-style: italic;
+            color: #3a5c4e;
+            font-size: 1.1rem;
+        }
+
+        /* === ACCIONES Y FILTROS === */
+        .acciones-bar {
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filtros-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-filtro {
+            background-color: var(--blanco);
+            border: 2px solid var(--verde-oscuro);
+            color: var(--verde-oscuro);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 3px 0 var(--verde-oscuro);
+        }
+
+        .btn-filtro:hover, .btn-filtro.activo {
+            background-color: var(--amarillo-sol);
+            transform: translateY(-2px);
+        }
+
+        .btn-compartir {
+            background-color: var(--amarillo-sol);
+            border: 2.5px solid var(--verde-oscuro);
+            color: var(--verde-oscuro);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: var(--sombra-3d);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.15s ease;
+        }
+
+        .btn-compartir:hover {
+            background-color: var(--amarillo-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-compartir:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 var(--verde-oscuro);
+        }
+
+        /* === GRILLA DE TESTIMONIOS === */
+        .contenedor-testimonios {
+            max-width: 1100px;
+            margin: 1rem auto 3rem;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .tarjeta-testimonio {
+            background: var(--blanco);
+            border: 3px solid var(--verde-oscuro);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 0 var(--verde-oscuro);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .tarjeta-testimonio:hover {
+            transform: translateY(-4px);
+        }
+
+        .header-tarjeta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2.5px solid var(--verde-oscuro);
+            background-color: var(--verde-menta-suave);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .info-autor h3 {
+            color: var(--verde-primario);
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .rol-badge {
+            font-size: 0.8rem;
+            background-color: var(--verde-menta-suave);
+            color: var(--verde-oscuro);
+            padding: 0.15rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 0.2rem;
+        }
+
+        .estrellas {
+            color: var(--amarillo-sol);
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .contenido-testimonio {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #2c4238;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .footer-tarjeta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px dashed #d0e5d8;
+            padding-top: 0.8rem;
+            font-size: 0.85rem;
+            color: #5d7a6c;
+        }
+
+        .btn-me-gusta {
+            background: none;
+            border: 1.5px solid var(--verde-oscuro);
+            border-radius: 15px;
+            padding: 0.2rem 0.6rem;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--verde-oscuro);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: background 0.2s;
+        }
+
+        .btn-me-gusta:hover {
+            background-color: var(--verde-menta-suave);
+        }
+
+        /* === MODAL FORMULARIO === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(24, 62, 51, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.activo {
+            display: flex;
+        }
+
+        .modal-contenido {
+            background: var(--blanco);
+            border: 3.5px solid var(--verde-oscuro);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 0 var(--verde-oscuro);
+            position: relative;
+        }
+
+        .cerrar-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--verde-oscuro);
+            font-weight: bold;
+        }
+
+        .modal-titulo {
+            color: var(--verde-primario);
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .campo-grupo {
+            margin-bottom: 1rem;
+        }
+
+        .campo-grupo label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--verde-oscuro);
+        }
+
+        .campo-grupo input, 
+        .campo-grupo select, 
+        .campo-grupo textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid var(--verde-oscuro);
+            border-radius: 12px;
+            font-size: 1rem;
+            background-color: #fafdfb;
+        }
+
+        .campo-grupo textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-enviar {
+            width: 100%;
+            background-color: var(--amarillo-sol);
+            border: 2.5px solid var(--verde-oscuro);
+            color: var(--verde-oscuro);
+            padding: 0.8rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: var(--sombra-3d);
+            margin-top: 0.5rem;
+        }
+
+        .btn-enviar:hover {
+            background-color: var(--amarillo-hover);
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--verde-primario);
+                padding: 1rem;
+                gap: 0.5rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            nav.abierto {
+                display: flex;
+            }
+
+            .sol-decorativo {
+                display: none;
+            }
+
+            .acciones-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filtros-container {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN -->
+  <header class="navbar">
+    <a href="{{ url_for('inicio') }}" class="logo">
+      <span class="logo-icon" aria-hidden="true">🌱</span>
+      <span class="logo-text">PEC</span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">☰</button>
+    <nav id="menu" aria-label="Menú principal">
+      {% set paginas = [('inicio','Inicio'),('nosotros','Nosotros'),('riesgos','Riesgos'),('proyectos','Proyectos'),('juego','Juego'),('contacto','Contacto'),('testimonios','Testimonios')] %}
+      {% for endpoint, nombre in paginas %}
+      <a href="{{ url_for(endpoint) }}"{% if request.endpoint == endpoint %} class="activo" aria-current="page"{% endif %}>{{ nombre }}</a>
+      {% endfor %}
+    </nav>
+  </header>
+
+  <!-- ENCABEZADO DE SECCIÓN -->
+  <header class="header-testimonios">
+      <h1 class="titulo-principal">Proyecto Escolar Comunitario</h1>
+      <div class="subtitulo-badge">Entornos seguros para aprender</div>
+      <p class="frase-motivacional">"Juntos mejoramos nuestra comunidad e inspiramos nuevas historias"</p>
+  </header>
+
+  <!-- BARRA DE ACCIONES Y FILTROS -->
+  <section class="acciones-bar">
+      <div class="filtros-container">
+          <button class="btn-filtro activo" onclick="filtrar('todos')">Todos</button>
+          <button class="btn-filtro" onclick="filtrar('estudiante')">Estudiantes 🎒</button>
+          <button class="btn-filtro" onclick="filtrar('docente')">Docentes 🍎</button>
+          <button class="btn-filtro" onclick="filtrar('comunidad')">Comunidad 🏡</button>
+      </div>
+      <button class="btn-compartir" onclick="abrirModal()">
+          <span>✍️</span> Compartir mi historia
+      </button>
+  </section>
+
+  <!-- LISTA DE TESTIMONIOS -->
+  <main class="contenedor-testimonios" id="gridTestimonios">
+
+      <!-- Tarjeta 1 -->
+      <article class="tarjeta-testimonio" data-rol="estudiante">
+          <div>
+              <div class="header-tarjeta">
+                  <div class="avatar">🧑‍🎓</div>
+                  <div class="info-autor">
+                      <h3>Sofía Martínez</h3>
+                      <span class="rol-badge">Estudiante - 5° Grado</span>
+                  </div>
+              </div>
+              <div class="estrellas">★★★★★</div>
+              <p class="contenido-testimonio">
+                  "Gracias a las actividades del PEC aprendimos a identificar las zonas seguras de la escuela. Ahora participamos pintando los senderos peatonales con nuestros compañeros."
+              </p>
+          </div>
+          <div class="footer-tarjeta">
+              <span>Escuela Benito Juárez</span>
+              <button class="btn-me-gusta" onclick="darMeGusta(this)">
+                  ❤️ <span>18</span>
+              </button>
+          </div>
+      </article>
+
+      <!-- Tarjeta 2 -->
+      <article class="tarjeta-testimonio" data-rol="docente">
+          <div>
+              <div class="header-tarjeta">
+                  <div class="avatar">👩‍🏫</div>
+                  <div class="info-autor">
+                      <h3>Profra. Laura Gómez</h3>
+                      <span class="rol-badge">Docente</span>
+                  </div>
+              </div>
+              <div class="estrellas">★★★★★</div>
+              <p class="contenido-testimonio">
+                  "El juego interactivo y los talleres del PEC motivaron mucho a los alumnos. Fue increíble ver cómo identificaron riesgos que los adultos pasábamos por alto."
+              </p>
+          </div>
+          <div class="footer-tarjeta">
+              <span>Primaria Niños Héroes</span>
+              <button class="btn-me-gusta" onclick="darMeGusta(this)">
+                  ❤️ <span>24</span>
+              </button>
+          </div>
+      </article>
+
+      <!-- Tarjeta 3 -->
+      <article class="tarjeta-testimonio" data-rol="comunidad">
+          <div>
+              <div class="header-tarjeta">
+                  <div class="avatar">👨‍👩‍👧</div>
+                  <div class="info-autor">
+                      <h3>Carlos Mendoza</h3>
+                      <span class="rol-badge">Padre de Familia</span>
+                  </div>
+              </div>
+              <div class="estrellas">★★★★★</div>
+              <p class="contenido-testimonio">
+                  "Nos organizamos con los vecinos para mejorar el alumbrado alrededor del colegio. La plataforma nos dio la guía paso a paso para gestionar las solicitudes."
+              </p>
+          </div>
+          <div class="footer-tarjeta">
+              <span>Comunidad Escolar Sur</span>
+              <button class="btn-me-gusta" onclick="darMeGusta(this)">
+                  ❤️ <span>31</span>
+              </button>
+          </div>
+      </article>
+
+  </main>
+
+  <!-- MODAL / FORMULARIO -->
+  <div class="modal-overlay" id="modalFormulario">
+      <div class="modal-contenido">
+          <button class="cerrar-modal" onclick="cerrarModal()">&times;</button>
+          <h2 class="modal-titulo">¡Cuéntanos tu experiencia!</h2>
+          
+          <form id="formTestimonio" onsubmit="guardarTestimonio(event)">
+              <div class="campo-grupo">
+                  <label for="nombre">Nombre completo</label>
+                  <input type="text" id="nombre" required placeholder="Ej. Ana Torres">
+              </div>
+
+              <div class="campo-grupo">
+                  <label for="rol">¿Cuál es tu rol?</label>
+                  <select id="rol" required>
+                      <option value="estudiante">Estudiante</option>
+                      <option value="docente">Docente / Directivo</option>
+                      <option value="comunidad">Padre de Familia / Vecino</option>
+                  </select>
+              </div>
+
+              <div class="campo-grupo">
+                  <label for="escuela">Escuela o Comunidad</label>
+                  <input type="text" id="escuela" required placeholder="Ej. Primaria República">
+              </div>
+
+              <div class="campo-grupo">
+                  <label for="historia">Tu historia de éxito</label>
+                  <textarea id="historia" required placeholder="¿Cómo ayudó el proyecto en tu entorno escolar?"></textarea>
+              </div>
+
+              <button type="submit" class="btn-enviar">Publicar Historia 🚀</button>
+          </form>
+      </div>
+  </div>
+
+  <script>
+      // Toggle del menú hamburguesa para celulares
+      const menuBtn = document.getElementById('menuBtn');
+      const menu = document.getElementById('menu');
+
+      if (menuBtn && menu) {
+          menuBtn.addEventListener('click', () => {
+              const abierto = menu.classList.toggle('abierto');
+              menuBtn.setAttribute('aria-expanded', abierto);
+          });
+      }
+
+      // Filtrado por categorías
+      function filtrar(categoria) {
+          const tarjetas = document.querySelectorAll('.tarjeta-testimonio');
+          const botones = document.querySelectorAll('.btn-filtro');
+
+          botones.forEach(btn => btn.classList.remove('activo'));
+          event.target.classList.add('activo');
+
+          tarjetas.forEach(tarjeta => {
+              if (categoria === 'todos' || tarjeta.dataset.rol === categoria) {
+                  tarjeta.style.display = 'flex';
+              } else {
+                  tarjeta.style.display = 'none';
+              }
+          });
+      }
+
+      // Funcionalidad de Me Gusta
+      function darMeGusta(btn) {
+          const contador = btn.querySelector('span');
+          let numero = parseInt(contador.textContent);
+          contador.textContent = numero + 1;
+          btn.style.backgroundColor = '#d5eedc';
+          btn.disabled = true;
+      }
+
+      // Funciones del Modal
+      function abrirModal() {
+          document.getElementById('modalFormulario').classList.add('activo');
+      }
+
+      function cerrarModal() {
+          document.getElementById('modalFormulario').classList.remove('activo');
+      }
+
+      // Agregar Testimonio dinámicamente
+      function guardarTestimonio(e) {
+          e.preventDefault();
+
+          const nombre = document.getElementById('nombre').value;
+          const rol = document.getElementById('rol').value;
+          const escuela = document.getElementById('escuela').value;
+          const historia = document.getElementById('historia').value;
+
+          const rolesTexto = {
+              'estudiante': 'Estudiante',
+              'docente': 'Docente',
+              'comunidad': 'Comunidad'
+          };
+
+          const avatares = {
+              'estudiante': '🧑‍🎓',
+              'docente': '👩‍🏫',
+              'comunidad': '🏡'
+          };
+
+          const nuevaTarjeta = document.createElement('article');
+          nuevaTarjeta.className = 'tarjeta-testimonio';
+          nuevaTarjeta.dataset.rol = rol;
+
+          nuevaTarjeta.innerHTML = `
+              <div>
+                  <div class="header-tarjeta">
+                      <div class="avatar">${avatares[rol]}</div>
+                      <div class="info-autor">
+                          <h3>${nombre}</h3>
+                          <span class="rol-badge">${rolesTexto[rol]}</span>
+                      </div>
+                  </div>
+                  <div class="estrellas">★★★★★</div>
+                  <p class="contenido-testimonio">"${historia}"</p>
+              </div>
+              <div class="footer-tarjeta">
+                  <span>${escuela}</span>
+                  <button class="btn-me-gusta" onclick="darMeGusta(this)">
+                      ❤️ <span>1</span>
+                  </button>
+              </div>
+          `;
+
+          document.getElementById('gridTestimonios').prepend(nuevaTarjeta);
+          cerrarModal();
+          document.getElementById('formTestimonio').reset();
+      }
+  </script>
+</body>
+</html>

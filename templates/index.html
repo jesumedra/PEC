@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <!-- HERO -->
+    <section class="hero">
+      <div class="sol" aria-hidden="true"></div>
+      <div class="hero-texto">
+        <h1>Proyecto Escolar Comunitario</h1>
+        <p class="nombre-proyecto">Entornos seguros para aprender</p>
+        <p class="lema">"Juntos mejoramos nuestra comunidad"</p>
+        <div class="hero-botones">
+          <a href="{{ url_for('riesgos') }}" class="btn" id="btnConocenos">Conoce los riesgos</a>
+          <a href="{{ url_for('juego') }}" class="btn btn-claro">Jugar</a>
+        </div>
+      </div>
+      <svg class="colinas" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,80 C240,10 480,120 720,70 C960,20 1200,110 1440,50 L1440,120 L0,120 Z" fill="#ffffff"/>
+      </svg>
+    </section>
+
+    <!-- PROPÓSITO -->
+    <section class="proposito">
+      <div class="proposito-caja">
+        <img class="ilustracion" src="{{ url_for('static', filename='img/escuela.svg') }}" width="320" height="200"
+             alt="Ilustración de una escuela con un escudo de protección">
+        <h2>Nuestro propósito</h2>
+        <p>Sensibilizar a la comunidad escolar de la secundaria Rosario Castellanos sobre los riesgos físicos del entorno escolar y su prevención.</p>
+      </div>
+    </section>
+
+    <!-- ACCESOS A LAS DEMÁS PÁGINAS -->
+    <section class="accesos">
+      <a href="{{ url_for('nosotros') }}" class="acceso">
+        <span class="icono" aria-hidden="true">👥</span>
+        <h2>Nosotros</h2>
+        <p>Quiénes somos y qué nos mueve.</p>
+      </a>
+      <a href="{{ url_for('riesgos') }}" class="acceso">
+        <span class="icono" aria-hidden="true">⚠️</span>
+        <h2>Riesgos</h2>
+        <p>Qué peligros hay y cómo prevenirlos.</p>
+      </a>
+      <a href="{{ url_for('proyectos') }}" class="acceso">
+        <span class="icono" aria-hidden="true">🌱</span>
+        <h2>Proyectos</h2>
+        <p>Lo que hacemos en la comunidad.</p>
+      </a>
+      <a href="{{ url_for('juego') }}" class="acceso">
+        <span class="icono" aria-hidden="true">🎮</span>
+        <h2>Juego</h2>
+        <p>Encuentra riesgos y responde el quiz.</p>
+      </a>
+      <a href="{{ url_for('contacto') }}" class="acceso">
+        <span class="icono" aria-hidden="true">✉️</span>
+        <h2>Contacto</h2>
+        <p>Envía tu opinión o un reporte.</p>
+      </a>
+
+    </section>
+{% endblock %}
